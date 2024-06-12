@@ -56,10 +56,15 @@ function CriarConta() {
     inquirer.prompt([
         {
             name: 'NomeDaConta',
-            message: 'Qual o nome da sua conta?'
+            message: 'Qual será o nome da sua conta?'
         }
     ]).then((answer) => {
         console.info(answer['NomeDaConta'])
+        if (!answer['NomeDaConta'] || !answer['NomeDaConta'].trim()) {
+            console.log(chalk.bgRed.black('Não é possível criar uma conta sem nome!'))
+            CriarConta();
+            return
+        }
         if (!fs.existsSync('Contas')) {
             fs.mkdirSync('Contas')
         }
